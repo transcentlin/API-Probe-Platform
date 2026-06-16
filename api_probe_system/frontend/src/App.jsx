@@ -42,7 +42,7 @@
 // ==================================
 
 import React, { useState, useEffect } from 'react';
-import { Compass, RefreshCw, AlertTriangle, Shield, History, GitCompare, FileText } from 'lucide-react';
+import { Compass, RefreshCw, AlertTriangle, Shield, History, GitCompare, FileText, Github } from 'lucide-react';
 import { apiClient } from './api/client';
 import HomePage from './pages/HomePage';
 import PlatformPage from './pages/PlatformPage';
@@ -255,6 +255,17 @@ export default function App() {
           <button className="btn btn-secondary btn-icon-only" title="刷新列表" onClick={() => fetchPlatforms()} disabled={loading}>
             <RefreshCw size={14} className={loading ? 'brand-icon' : ''} style={{ animation: loading ? 'rotateGlow 1.5s linear infinite' : 'none' }} />
           </button>
+
+          <a 
+            href="https://github.com/transcentlin/API-Probe-Platform" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn btn-secondary btn-icon-only" 
+            title="在 GitHub 上点个 Star ⭐" 
+            style={{ color: 'hsl(var(--text-main))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Github size={14} />
+          </a>
         </div>
       </header>
 
@@ -343,6 +354,18 @@ export default function App() {
         isOpen={historyDrawerOpen}
         onClose={() => setHistoryDrawerOpen(false)}
       />
+
+      <footer className="app-footer" style={{ textAlign: 'center', padding: '1.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', color: 'hsl(var(--text-dim))', fontSize: '0.8rem', background: 'rgba(9, 13, 22, 0.2)', backdropFilter: 'blur(8px)', marginTop: 'auto' }}>
+        <span>API Probe Platform &copy; 2026 | </span>
+        <a 
+          href="https://github.com/transcentlin/API-Probe-Platform" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ color: 'hsl(var(--color-primary))', textDecoration: 'none', marginLeft: '0.25rem', fontWeight: 600 }}
+        >
+          在 GitHub 上点个 Star ⭐ 支持开源
+        </a>
+      </footer>
     </div>
   );
 }
