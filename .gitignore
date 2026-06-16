@@ -1,0 +1,57 @@
+# Python env / cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Sensitive data / environments (Strictly Exclude Env Keys)
+.env
+.env.enc
+*.env
+*.env.enc
+api_probe_system/config/.env
+api_probe_system/config/.env.enc
+api_probe_system/config/platforms.enc
+*.enc
+
+# Sensitive Markdown files with credentials
+【重要】API平台列表.md
+
+# Process-tracking Markdown documents (Exclude from delivery)
+项目具体情况分析报告.md
+项目进度与交接.md
+最新项目信息和任务状态.md
+
+# Local backups
+Version Control/
+Version_Control/
+*v[0-9]*.[0-9]*.py
+base_v*.py
+reporter_v*.py
+
+# Editor / IDE settings
+.claude/
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Reports output (Exclude generated report files, keep template)
+reports/*
+!reports/报告模板规范.md
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temp Scratch files
+scratch/
+run_e2e.log

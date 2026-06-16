@@ -1,0 +1,28 @@
+{
+  "platforms": [
+    {
+      "name": "Ollama",
+      "base_url": "http://127.0.0.1:11434/v1",
+      "api_key": "ollama",
+      "enabled": true,
+      "notes": "本地已部署的 Ollama 服务",
+      "website": "https://ollama.com",
+      "hints": {
+        "format": "openai",
+        "models": ["qwen2", "llama3", "mistral"],
+        "endpoints": ["/chat/completions"]
+      },
+      "discovery_handler": "openai"
+    },
+    {
+      "name": "OpenAI_Template",
+      "base_url": "https://api.openai.com/v1",
+      "api_key": "YOUR_API_KEY_HERE",
+      "enabled": false,
+      "notes": "OpenAI 平台模板配置（请修改 api_key 后启用）",
+      "website": "https://platform.openai.com",
+      "hints": {},
+      "discovery_handler": "openai"
+    }
+  ]
+}

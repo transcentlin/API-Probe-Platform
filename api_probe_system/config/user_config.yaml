@@ -1,0 +1,8 @@
+# 全局默认配置（可选，未提供则使用代码默认值）
+defaults:
+  timeouts:
+    fast_threshold_ms: 30000   # 健康响应上限（首字节延迟 < 此值 → 🟢 健康）
+    slow_threshold_ms: 60000   # 半死不活上限（首字节 < 此值 → 🟡，> 此值 → 🔴）
+    connect_timeout_s: 10.0    # TCP 连接超时（秒）
+  deep_probe:
+    top_n: 3                   # Stage4/5 覆盖排名前 N 的可用模型（--mode deep 时生效）
