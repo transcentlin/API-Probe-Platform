@@ -1,6 +1,15 @@
 # API 平台测试系统 (API Probe Platform)
 
-一个先进的多供应商 API 性能、能力及兼容性评估与测试平台。系统提供了统一的 CLI 命令行入口以及直观的 Web 可视化仪表盘，旨在全方位评估并对比各大主流大模型（LLM）API 提供商在核心能力维度上的表现。
+[![GitHub Stars](https://img.shields.io/github/stars/transcentlin/API-Probe-Platform?style=social)](https://github.com/transcentlin/API-Probe-Platform/stargazers)
+[![GitHub Release](https://img.shields.io/github/v/release/transcentlin/API-Probe-Platform?include_prereleases&style=flat-square)](https://github.com/transcentlin/API-Probe-Platform/releases)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-Vite-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+
+> **先进的大模型 API 多服务商性能与兼容性评估平台** | An advanced, multi-provider LLM API performance benchmark and evaluation platform.
+
+一个面向 LLM API 服务商的全方位性能、能力及兼容性评估与测试平台。系统提供了统一的 CLI 命令行入口以及直观的 Web 可视化仪表盘，旨在全方位评估并对比各大主流大模型（LLM）API 提供商在核心能力维度上的表现。
 
 ---
 
@@ -21,9 +30,11 @@
 
 ## 🛠️ 技术栈
 
-- **后端/核心引擎**：Python 3.x, FastAPI, HTTPX, PyYAML, Cryptography
-- **前端控制台**：React (Vite), Vanilla CSS (现代深色主题、柔和渐变与微交互)
-- **存储**：轻量级本地文件数据库/结构化 JSON 存储
+| 层级 | 技术 |
+|---|---|
+| **后端/核心引擎** | Python 3.x · FastAPI · HTTPX · PyYAML · Cryptography |
+| **前端控制台** | React (Vite) · Vanilla CSS · 现代深色主题 · 微交互动效 |
+| **存储** | 轻量级本地文件数据库 · 结构化 JSON 存储 |
 
 ---
 
@@ -82,3 +93,17 @@ python api_probe_system/run.py --help
 1. 本地生成纯净的 `platforms.enc` 加密配置载体。
 2. 通过环境变量注入各平台的 API Token。
 3. 相关的解密 Key 必须置于代码库之外，禁止以任何形式上传至 Git。
+
+---
+
+## 🤝 贡献与反馈
+
+欢迎提出 [Issue](https://github.com/transcentlin/API-Probe-Platform/issues) 或 [Pull Request](https://github.com/transcentlin/API-Probe-Platform/pulls)，共同改进本项目。
+
+如果您觉得本项目对您有帮助，请给我们一个 ⭐ Star，这是对开源开发者最大的鼓励！
+
+---
+
+## 📄 许可证
+
+本项目基于 [MIT License](LICENSE) 开源。
