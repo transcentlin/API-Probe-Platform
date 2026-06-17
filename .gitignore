@@ -71,5 +71,6 @@ API Probe.exe
 build/
 dist/
 *.spec
+项目打包与清理指南.md
 
 
