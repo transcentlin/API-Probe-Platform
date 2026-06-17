@@ -64,3 +64,12 @@ API平台测试系统需求规格说明书 v1.0.md
 # Internal promotion strategy documents
 开源推广方案.md
 手动推广操作指南.md
+
+# Local service launcher program
+启动服务.exe
+API Probe.exe
+build/
+dist/
+*.spec
+
+

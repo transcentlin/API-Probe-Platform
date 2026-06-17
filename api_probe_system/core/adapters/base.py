@@ -1,5 +1,9 @@
 # 修改历史 (Revision History)
 # ==================================
+# 版本: v1.3
+# 日期: 2026-06-17
+# 修改说明: 修复 OllamaAdapter.get_headers 缺失 Authorization 鉴权标头的问题，确保直连 Ollama Cloud API 时能顺利携带 Token 完成鉴权。
+# ----------------------------------
 # 版本: v1.2
 # 日期: 2026-06-15
 # 修改说明: 扩充 FormatAdapter 协议支持 default_endpoint 和 get_headers()；补全了 Anthropic 和 Gemini 适配器；新增 OpenAI Text、OpenAI Responses、Ollama、Cohere 以及 DashScope 原生格式适配器；使 Registry 在初始化时默认注册所有 8 类主流适配器。
@@ -323,9 +327,12 @@ class OllamaAdapter:
         return "/api/chat"
 
     def get_headers(self, api_key: str) -> dict:
-        return {
+        headers = {
             "Content-Type": "application/json",
         }
+        if api_key and api_key != "ollama":
+            headers["Authorization"] = f"Bearer {api_key}"
+        return headers
 
     def build_probe_request(self, prompt: str, model: str, **kwargs) -> dict:
         return {

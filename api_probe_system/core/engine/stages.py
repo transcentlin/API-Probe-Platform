@@ -1,5 +1,9 @@
 # 修改历史 (Revision History)
 # ==================================
+# 版本: v1.15
+# 日期: 2026-06-17
+# 修改说明: 在 Stage 1 格式探针中，支持 platform.hints.format 手动指定与利用 discovery_handler 自动发现真实测试模型，彻底打通非标平台的格式识别与连通逻辑。
+# ----------------------------------
 # 版本: v1.14
 # 日期: 2026-06-16
 # 修改说明: 在 Stage 2 端点发现发生异常时，调用 _log_compatibility_alert 将错误写入 reports/compatibility_alerts.json；若发现成功，则调用 _clear_compatibility_alert 移除该平台历史告警。
@@ -241,6 +245,39 @@ class Stage1_FormatDetection:
         from ..secret import SecretResolver
 
         platform = ctx.platform
+        # 1. 优先支持 hints.format 手动指定并短路
+        if platform.hints and platform.hints.format:
+            from ..constants import KNOWN_FORMATS, FORMAT_OPENAI, FORMAT_OLLAMA, FORMAT_ANTHROPIC, FORMAT_GEMINI, FORMAT_COHERE, FORMAT_DASHSCOPE
+            fmt_hint = platform.hints.format
+            mapping = {
+                "openai": FORMAT_OPENAI,
+                "openai-chat": FORMAT_OPENAI,
+                "openai_chat_completions": FORMAT_OPENAI,
+                "ollama": FORMAT_OLLAMA,
+                "ollama-native": FORMAT_OLLAMA,
+                "ollama_native": FORMAT_OLLAMA,
+                "anthropic": FORMAT_ANTHROPIC,
+                "anthropic-messages": FORMAT_ANTHROPIC,
+                "anthropic_messages": FORMAT_ANTHROPIC,
+                "gemini": FORMAT_GEMINI,
+                "gemini-native": FORMAT_GEMINI,
+                "gemini_native": FORMAT_GEMINI,
+                "cohere": FORMAT_COHERE,
+                "cohere-native": FORMAT_COHERE,
+                "cohere_native": FORMAT_COHERE,
+                "dashscope": FORMAT_DASHSCOPE,
+                "dashscope-native": FORMAT_DASHSCOPE,
+                "dashscope_native": FORMAT_DASHSCOPE
+            }
+            mapped_fmt = mapping.get(fmt_hint.lower(), fmt_hint)
+            if mapped_fmt in KNOWN_FORMATS:
+                ctx.format_detection = FormatDetectionResult(
+                    detected_format=mapped_fmt,
+                    confidence=1.0,
+                    scores={mapped_fmt: 1.0}
+                )
+                return
+
         base_url = normalize_base_url(str(platform.base_url))
 
         # 解析密钥
@@ -325,6 +362,26 @@ class Stage1_FormatDetection:
         # 1. 用户提示优先
         if platform.hints and platform.hints.models:
             return platform.hints.models[0]
+
+        # 1.5 尝试使用平台指定的 discovery_handler 来获取真实模型
+        if platform.discovery_handler:
+            try:
+                from ..discovery import discovery_registry
+                from ..secret import SecretResolver
+                handler = discovery_registry.get(platform.discovery_handler)
+                api_key = SecretResolver.resolve(platform.api_key)
+                m_status = {}
+                models = await handler.discover(client, base_url, api_key, platform, model_status=m_status)
+                if models:
+                    healthy_models = [
+                        m for m in models
+                        if m_status.get(m, "").lower() not in ["dead", "offline", "degraded"]
+                    ]
+                    if healthy_models:
+                        return healthy_models[0]
+                    return models[0]
+            except Exception:
+                pass
 
         # 2. 尝试 /models 端点
         try:
